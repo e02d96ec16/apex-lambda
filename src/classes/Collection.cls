@@ -373,4 +373,15 @@ public with sharing class Collection {
 		}
 		return Collection.of(transformed);
 	}
+
+	public Collection reduce(SObjectToSObjectFunction fn) {
+		List<SObject> reduced = new List<SObject>();
+		if(records.size() > 0){
+			reduced.add(fn.apply(records[0]));
+			for (Integer i = 1; i < records.size(); i++) {
+				reduced[0] = fn.apply(records[i]);
+			}
+		}
+		return Collection.of(reduced);
+	}
 }
